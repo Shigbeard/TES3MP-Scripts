@@ -1,6 +1,6 @@
-------------------
--- Version: 1.2 --
-------------------
+--------------------
+-- Version: 1.2.1 --
+--------------------
 
 local Methods = {}
 --------------------------------------------------------------------------------------------
@@ -52,13 +52,18 @@ Methods.Initialize = function()
 end
 
 --Call all of the functions when player logs in, run the startup scripts if conditions are met
-Methods.OnLogin = function(pid)
+
+Methods.InitializeCustomVariables = function(pid)
     if Players[pid].data.customVariables.Skvysh == nil then
         Players[pid].data.customVariables.Skvysh = {}
     end
     if Players[pid].data.customVariables.Skvysh.StartupScripts == nil then
         Players[pid].data.customVariables.Skvysh.StartupScripts = {}
     end
+end
+
+Methods.OnLogin = function(pid)
+    startupScripts.InitializeCustomVariables(pid)
     Players[pid].data.customVariables.Skvysh.StartupScripts.initializedCells = {} -- used for onCellChange function
     -- Mage's guild expulsion timer variables
     if Players[pid].data.customVariables.Skvysh.StartupScripts.expulsionPrevious == nil then
@@ -89,8 +94,14 @@ end
 then we calculate days since expulsion by subtracting world's daysPassed from the daysPassed when expulsion was triggered
 finally, we set the global expulsion variable to the result, as well as telling the script to start counting from there]]
 Methods.LoadExpulsionTimer = function(pid)
-    local expulsionTimer = WorldInstance.data.time.daysPassed - Players[pid].data.customVariables.Skvysh.StartupScripts.expulsionDay
+    local expulsionSaved
+    if Players[pid].data.customVariables.Skvysh.StartupScripts.expulsionDay == nil then
+        expulsionSaved = WorldInstance.data.time.daysPassed
+    else
+        expulsionSaved = Players[pid].data.customVariables.Skvysh.StartupScripts.expulsionDay
+    end
     local expulsion = false
+    local expulsionTimer = WorldInstance.data.time.daysPassed - expulsionSaved
     if config.shareFactionExpulsion == true then
         if WorldInstance.data.factionExpulsion["mages guild"] ~= nil then
             expulsion = WorldInstance.data.factionExpulsion["mages guild"]
@@ -300,6 +311,7 @@ Then, we go through entire journal to find the quest that re-enables those objec
 If the conditions for quest name and index are met, we re-enable the objects for that player only]]
 Methods.OnCellChange = function(pid)
     if Players[pid]:IsLoggedIn() then
+        startupScripts.InitializeCustomVariables(pid)
         startupScripts.CheckGuildExplusion(pid)
         local cell = tes3mp.GetCell(pid)
         local cellArray = Players[pid].data.customVariables.Skvysh.StartupScripts.initializedCells

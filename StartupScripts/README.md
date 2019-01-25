@@ -37,11 +37,13 @@ The charGen disabling has been tested only briefly. Message box about character 
 
 10) Find `if self.hasAccount ~= false then` and below it add `startupScripts.OnLogin(self.pid)`.
 
-11) Save `base.lua` and close it.
+11) Find `if config.defaultSpawnCell ~= nil then` and above it add `startupScripts.OnLogin(self.pid)`.
 
-12) (OPTIONAL) Open `startupScripts` and change settings values at the beginning of the script. See the comments in the script for more details.
+12) Save `base.lua` and close it.
 
-13) (OPTIONAL) See below for enabling `Census and Excise Office`.
+13) (OPTIONAL) Open `startupScripts` and change settings values at the beginning of the script. See the comments in the script for more details.
+
+14) (OPTIONAL) See below for enabling `Census and Excise Office`.
 
 ## FEATURES
 ### Base game:
@@ -102,6 +104,10 @@ You are welcome to modify the `startupData.json` file to properly set more varia
 
 ## CHANGELOG:
 ### SCRIPT CHANGELOG:
+#### 1.2.1:
+Fix crashes on register.
+Fix scripts not being executed on register.
+
 #### 1.2:
 Add capability to load waiting progress for quests that require to come back after a period of time.
 Add capability to disable charGen scripts.
