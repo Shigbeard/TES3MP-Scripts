@@ -1,3 +1,13 @@
+# OUTDATED!!!
+
+**This is the exact copy of Skvysh's repository of TES3MP scripts, some time before they got nuked (Likely because Skvysh backdoored it, but that's unrelated.**
+
+For a version of this repository that seems to be more actively maintained, please head on over to [Learwolf's fork](https://github.com/Learwolf/TES3MP-Scripts-1/). One of the first things he did was patch the backdoor.
+
+# PLEASE DO NOT ACTIVELY USE THIS VERSION ON YOUR SERVER!
+
+-----
+
 # Custom server-side scripts for [TES3MP](https://tes3mp.com/) version 0.7.x.
 
 **Note:** For version 0.6.x scripts, [use this link.](https://github.com/Skvysh/TES3MP-Scripts-0.6)
